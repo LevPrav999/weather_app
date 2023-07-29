@@ -1,4 +1,4 @@
-package ru.levprav.weatherapp.presentation.theme
+package ru.levprav.weatherapp.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
