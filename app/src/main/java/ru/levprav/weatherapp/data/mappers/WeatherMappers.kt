@@ -1,7 +1,9 @@
 package ru.levprav.weatherapp.data.mappers
 
 import ru.levprav.weatherapp.data.remote.WeatherDataDto
+import ru.levprav.weatherapp.data.remote.WeatherDto
 import ru.levprav.weatherapp.domain.weather.WeatherData
+import ru.levprav.weatherapp.domain.weather.WeatherInfo
 import ru.levprav.weatherapp.domain.weather.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -34,4 +36,17 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     }.mapValues {
         it.value.map { it.data }
     }
+}
+
+fun WeatherDto.toWeatherInfo(): WeatherInfo {
+    val weatherDataMap = weatherData.toWeatherDataMap()
+    val now = LocalDateTime.now()
+    val currentWeatherData = weatherDataMap[0]?.find {
+        val hour = if(now.minute < 30) now.hour else now.hour + 1
+        it.time.hour == hour
+    }
+    return WeatherInfo(
+        weatherDataDerDay = weatherDataMap,
+        currentWeatherData = currentWeatherData
+    )
 }
