@@ -1,6 +1,6 @@
 # WeatherApp на Jetpack Compose
 
-![WeatherApp Preview](preview.png)
+![WeatherApp Preview](preview.jpg)
 
 Простое приложение для просмотра погоды на Jetpack Compose, использующее чистую архитектуру.
 
