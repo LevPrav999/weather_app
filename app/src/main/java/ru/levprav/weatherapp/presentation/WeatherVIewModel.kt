@@ -13,7 +13,7 @@ import ru.levprav.weatherapp.domain.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class WeatherVIewModel @Inject constructor(
+class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
     private val locationTracker: LocationTracker
 ): ViewModel() {
@@ -24,12 +24,12 @@ class WeatherVIewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(isLoading = true, error = null)
             locationTracker.getCurrentLocation()?.let { location ->
-                when(val result = repository.getWeatherData(location.latitude, location.longitude)) {
+                state = when(val result = repository.getWeatherData(location.latitude, location.longitude)) {
                     is Resource.Success -> {
-                        state = state.copy(weatherInfo = result.data, isLoading = false, error = null)
+                        state.copy(weatherInfo = result.data, isLoading = false, error = null)
                     }
                     is Resource.Error -> {
-                        state = state.copy(
+                        state.copy(
                             weatherInfo = null,
                             isLoading = false,
                             error = result.message
